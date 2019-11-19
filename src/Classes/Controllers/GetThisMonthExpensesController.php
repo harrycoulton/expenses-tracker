@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Example\Controllers;
-
 
 use Psr\Container\ContainerInterface;
 
@@ -25,21 +23,54 @@ class GetThisMonthExpensesController
 
     public function __invoke($request, $response)
     {
-        $expenses = $this->model->getExpensesByCategory();
-        $expenses = $this->addTimeStamps($expenses);
-        var_dump($expenses);
+        $expenses = $this->model->getExpenses();
+        foreach ($expenses as $key => $expense){
+            $expenses[$key]['timestamp'] = strtotime($expense['date']);
+        }
+        $expensesByDate = $this->arrangeByDate($expenses);
+        $expensesByCat = $this->arrangeByCategory($expenses);
+        $monthTotalsByCat = $this->getMonthTotalsByCat($expensesByCat);
+        $monthTotalExpenditure = $this->monthTotal;
+        $this->view->render($response, 'index.phtml',  ['expensesByDate' => $expensesByDate,
+                                                        'expensesByCat'  => $expensesByCat,
+                                                         'monthTotalsByCat' => $monthTotalsByCat,
+                                                        'monthTotalExpenditure' => $monthTotalExpenditure]);
     }
 
-    public function addTimeStamps($expenses) {
-        foreach ($expenses as $key1 => $expenseByCategory) {
-            foreach ($expenseByCategory as $key2 => $expense){
-                $expenses[$key1][$key2]['timestamp'] = strtotime($expense['date']);
-                if ($expenses[$key1][$key2]['timestamp'] > strtotime('midnight first day of this month')){
-                    $this->monthTotal = ($this->monthTotal + $expense['expense-value']);
-                } ;
+    public function arrangeByDate($expenses) {
+        $expenseByDate = [];
+            foreach ($expenses as $expense) {
+                $expenseByDate[$expense['timestamp']][] = $expense;
             }
+        return $expenseByDate;
         }
-        return $expenses;
+
+        public function arrangeByCategory($expenses) {
+            $expenseByCategory = [];
+            foreach ($expenses as $expense) {
+                $expenseByCategory[$expense['category']][] = $expense;
+            }
+            return $expenseByCategory;
+        }
+
+        public function getMonthTotalsByCat($expensesByCat) {
+            $monthCatTotals = [];
+            foreach ($expensesByCat as $expenseList) {
+                foreach ($expenseList as $expense) {
+                    if ($expense['timestamp'] > strtotime('midnight first day of this month')) {
+                        $this->monthTotal = ($this->monthTotal + $expense['expense-value']);
+                         };
+                }
+            }
+            foreach ($expensesByCat as $expenseList) {
+                foreach ($expenseList as $expense) {
+                    if ($expense['timestamp'] > strtotime('midnight first day of this month')){
+                        $monthCatTotals[$expense['category']]['monthTotal'] += $expense['expense-value'];
+                        $monthCatTotals[$expense['category']]['monthPercentage'] = number_format((($monthCatTotals[$expense['category']]['monthTotal']/$this->monthTotal)*100), 2);
+                    };
+                }
+            }
+            return $monthCatTotals;
         }
 
 }
