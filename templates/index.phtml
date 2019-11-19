@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8"/>
         <title>Slim 3</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
         <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js" integrity="sha256-arMsf+3JJK2LoTGqxfnuJPFTU4hAK57MtIPdFpiHXOU=" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -50,7 +51,6 @@
             array_push($monthCats, $category);
             array_push($monthPercentage, $monthTotal['monthPercentage']);
         }
-        var_dump($monthTotalExpenditure);
         ?>
 
         <canvas id="myChart" width="400" height="400"></canvas>
@@ -83,12 +83,14 @@
                     }]
                 },
                 options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
+                    tooltips: {
+                        mode: 'label',
+                        label: 'mylabel',
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                var value = Number(data.datasets[0].data[tooltipItem.index]).toFixed(2);
+                                return value+'%';
+                            }, },
                     }
                 }
             });
