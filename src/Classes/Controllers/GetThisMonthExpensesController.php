@@ -40,7 +40,9 @@ class GetThisMonthExpensesController
     public function arrangeByDate($expenses) {
         $expenseByDate = [];
             foreach ($expenses as $expense) {
-                $expenseByDate[$expense['timestamp']][] = $expense;
+                if ($expense['timestamp'] > strtotime('midnight first day of this month')) {
+                    $expenseByDate[$expense['timestamp']][] = $expense;
+                };
             }
         return $expenseByDate;
         }
@@ -48,7 +50,9 @@ class GetThisMonthExpensesController
         public function arrangeByCategory($expenses) {
             $expenseByCategory = [];
             foreach ($expenses as $expense) {
-                $expenseByCategory[$expense['category']][] = $expense;
+                if ($expense['timestamp'] > strtotime('midnight first day of this month')) {
+                    $expenseByCategory[$expense['category']][] = $expense;
+                };
             }
             return $expenseByCategory;
         }
