@@ -1,9 +1,16 @@
+<?php
+$monthCats = [];
+$monthPercentage = [];
+foreach ($monthTotalsByCat as $category => $monthTotal){
+    array_push($monthCats, $category);
+    array_push($monthPercentage, $monthTotal['monthPercentage']);
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8"/>
         <title>Slim 3</title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
         <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
         <link href="img/favicon.png" rel="icon">
         <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -37,6 +44,78 @@
             </nav>
         </div>
     </header>
+
+    <section id="view" class="section-bg">
+        <div class="container-fluid">
+            <div class="section-header">
+                <h3 class="section-title">Expenses in <?php echo date(F) ?></h3>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8 wow fadeInLeft">
+                        <canvas id="monthChart"></canvas>
+                        <script>
+                            var ctx = document.getElementById('monthChart');
+                            var monthChart = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: <?php echo json_encode($monthCats)?>,
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: <?php echo json_encode($monthPercentage)?>,
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            'rgba(153, 102, 255, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    tooltips: {
+                                        mode: 'label',
+                                        label: 'mylabel',
+                                        callbacks: {
+                                            label: function (tooltipItem, data) {
+                                                var value = Number(data.datasets[0].data[tooltipItem.index]).toFixed(2);
+                                                return value+'%';
+                                            }, },
+                                    }
+                                }
+                            });
+                        </script>
+                </div>
+                <div class="col-lg-4 content wow fadeInRight">
+                    <h2>So far this month, you've spent:</h2>
+                    <?php
+                    foreach ($monthTotalsByCat as $category => $monthTotal){
+                        echo '<p>£'.$monthTotal['monthTotal'].' on '.$category.'</p>';
+                    }
+                    ?>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section id="view-individual" class="section-bg">
+        <div class="container-fluid">
+    <div class="section-header">
+        <h3 class="section-title">View Expenses by individual date</h3>
+    </div>
+    <div class="row" id="view-expenses">
+
+        <div class="col-lg-8">
     <div class="accordion" id="accordionExample">
         <?php foreach ($expensesByDate as $timestamp => $expenselist) {
         $date = date('d-m-y', $timestamp) ?>
@@ -48,78 +127,31 @@
                     </button>
                 </h2>
             </div>
-
-            <div id="collapse<?php echo $date ?>" class="collapse" aria-labelledby="heading<?php echo $date ?>" data-parent="#accordionExample">
-                <?php foreach ($expenselist as $expense) { ?>
-                <div class="card-body">
-                    <? echo $expense['expense-name']?>
-                    <? echo $expense['expense-value']?>
-                    <? echo $expense['category']?>
-                    <form method="post" action="/delete-expense" name="delete-expense">
-                        <input type="hidden" name="delete-expense" value="<? echo $expense['id']?>">
-                        <input type="submit" name="delete-expense" value="X">
-                    </form>
-                </div>
             <?php }?>
         </div>
-        <?php }?>
     </div>
-        <?php
-        foreach ($monthTotalsByCat as $category => $monthTotal){
-            echo 'You spent £'.$monthTotal['monthTotal'].' on '.$category.' since the start of the month <br> <br>';
-        }
-        ?>
-       <?php
-        $monthCats = [];
-        $monthPercentage = [];
-        foreach ($monthTotalsByCat as $category => $monthTotal){
-            array_push($monthCats, $category);
-            array_push($monthPercentage, $monthTotal['monthPercentage']);
-        }
-        ?>
-
-        <canvas id="myChart" width="400" height="400"></canvas>
-        <script>
-            var ctx = document.getElementById('myChart');
-            var myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: <?php echo json_encode($monthCats)?>,
-                    datasets: [{
-                        label: '# of Votes',
-                        data: <?php echo json_encode($monthPercentage)?>,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    tooltips: {
-                        mode: 'label',
-                        label: 'mylabel',
-                        callbacks: {
-                            label: function (tooltipItem, data) {
-                                var value = Number(data.datasets[0].data[tooltipItem.index]).toFixed(2);
-                                return value+'%';
-                            }, },
-                    }
-                }
-            });
-        </script>
+        </div>
+            <div class="col-lg-4 accordion-expenses">
+            <?php foreach ($expensesByDate as $timestamp => $expenselist) {
+            $date = date('d-m-y', $timestamp) ?>
+            <div id="collapse<?php echo $date ?>" class="collapse" aria-labelledby="heading<?php echo $date ?>" data-parent="#accordionExample">
+                <?php foreach ($expenselist as $expense) { ?>
+                    <div class="card-body">
+                        <? echo $expense['expense-name']?>
+                        <? echo $expense['expense-value']?>
+                        <? echo $expense['category']?>
+                        <form method="post" action="/delete-expense" name="delete-expense">
+                            <input type="hidden" name="delete-expense" value="<? echo $expense['id']?>">
+                            <input type="submit" name="delete-expense" value="X">
+                        </form>
+                    </div>
+                <?php }?>
+            </div>
+            <?php }?>
+    </div>
+    </div>
+        </div>
+    </section>
         <script src="lib/jquery/jquery.min.js"></script>
         <script src="lib/jquery/jquery-migrate.min.js"></script>
         <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
