@@ -21,15 +21,11 @@ class ExpenseModel
      * Gets the Expenses from the database
      * @return mixed
      */
-    public function getExpensesByCategory()
+    public function getExpenses()
     {
         $query = $this->db->query('SELECT `id`, `expense-name`, `expense-value`, `date`, `category` FROM  `expenses` ORDER BY `date`');
         $expenses = $query->fetchAll();
-        $expenseByCategory = [];
-        foreach ($expenses as $expense) {
-            $expenseByCategory[$expense['category']][] = $expense;
-        }
-        return $expenseByCategory;
+        return $expenses;
     }
 
     /**
