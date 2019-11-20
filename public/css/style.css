@@ -4,10 +4,6 @@
     padding: 0;
 }
 
-div {
-    background-color: #0c0c26 !important;
-}
-
 body {
     background-color: #0c0c26;
     color: #4383fe;
@@ -101,11 +97,6 @@ h6 {
     color: #4383fe;
 }
 
-#header #title img {
-    padding: 0;
-    margin: 0;
-}
-
 #header.header-fixed {
     background: linear-gradient(45deg, #050d48, #17244a);
     padding: 20px 0;
@@ -151,6 +142,10 @@ h6 {
 
 .nav-menu ul li {
     min-width: 180px;
+}
+
+.nav-menu a:hover {
+    color: #1dc8cd;
 }
 
 #add-expense {
@@ -444,6 +439,18 @@ section {
     cursor: pointer;
    }
 
+   /* Footer */
+
+footer {
+    min-height: 10vh;
+    background: #0b0b0b6a;
+    padding: 40px;
+    text-align: center;
+}
+.highlight {
+    color: #1dc8cd;
+
+}
 
 /* Media queries (live at the bottom..) */
 
