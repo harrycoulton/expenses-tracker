@@ -45,6 +45,6 @@ class ExpenseModel
 
     public function deleteExpense($formData) {
         $query = $this->db->prepare("DELETE FROM `expenses` WHERE `id` =:ExpenseId");
-        $query->execute(['ExpenseId' => $formData]);
+        $query->execute(['ExpenseId' => $formData['delete-expense']]);
     }
 }
