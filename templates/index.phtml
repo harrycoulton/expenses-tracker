@@ -44,14 +44,14 @@ foreach ($monthTotalsByCat as $category => $monthTotal){
             </nav>
         </div>
     </header>
-
     <section id="view" class="section-bg">
         <div class="container-fluid">
             <div class="section-header">
                 <h3 class="section-title">Expenses in <?php echo date(F) ?></h3>
             </div>
-
-            <div class="row">
+            <button id="view-expenses-by-individual">View Expenses by individual date</button>
+            <button id="view-expenses-by-chart">View Chart</button>
+            <div class="row" id="viewchart">
                 <div class="col-lg-8 wow fadeInLeft">
                         <canvas id="monthChart"></canvas>
                         <script>
@@ -105,53 +105,32 @@ foreach ($monthTotalsByCat as $category => $monthTotal){
                     ?>
                 </div>
             </div>
-
-        </div>
-    </section>
-    <section id="view-individual" class="section-bg">
-        <div class="container-fluid">
-    <div class="section-header">
-        <h3 class="section-title">View Expenses by individual date</h3>
-    </div>
-    <div class="row" id="view-expenses">
-
-        <div class="col-lg-8">
-    <div class="accordion" id="accordionExample">
-        <?php foreach ($expensesByDate as $timestamp => $expenselist) {
-        $date = date('d-m-y', $timestamp) ?>
-        <div class="card">
-            <div class="card-header" id="heading<?php echo $date ?>">
-                <h2 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<?php echo $date ?>" aria-expanded="true" aria-controls="collapse<?php echo $date ?>">
-                        <?php echo $date ?>
-                    </button>
-                </h2>
+            <div class="row" id="viewexpenses">
+                <div class="col-lg-12 viewexpenses">
+            <div>
+            <?php foreach ($expensesByDate as $timestamp => $expenselist) {
+                $date = date('d-m-y', $timestamp) ?>
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#<?php echo $date ?>" aria-expanded="false" aria-controls="<?php echo $date ?>"><?php echo $date ?></button>
+            <?php } ?>
             </div>
-            <?php }?>
-        </div>
-    </div>
-        </div>
-            <div class="col-lg-4 accordion-expenses">
             <?php foreach ($expensesByDate as $timestamp => $expenselist) {
             $date = date('d-m-y', $timestamp) ?>
-            <div id="collapse<?php echo $date ?>" class="collapse" aria-labelledby="heading<?php echo $date ?>" data-parent="#accordionExample">
-                <?php foreach ($expenselist as $expense) { ?>
-                    <div class="card-body">
-                        <? echo $expense['expense-name']?>
-                        <? echo $expense['expense-value']?>
-                        <? echo $expense['category']?>
-                        <form method="post" action="/delete-expense" name="delete-expense">
-                            <input type="hidden" name="delete-expense" value="<? echo $expense['id']?>">
-                            <input type="submit" name="delete-expense" value="X">
-                        </form>
+            <div class="row">
+                <div class="col">
+                    <div class="collapse multi-collapse" id="<?php echo $date ?>">
+                        <?php foreach ($expenselist as $expense) { ?>
+                        <div class="card card-body">
+                            <?php echo $expense['expense-name'] ?>
+                        </div>
+                        <?php } ?>
                     </div>
-                <?php }?>
+                </div>
             </div>
-            <?php }?>
-    </div>
-    </div>
-        </div>
+            <?php } ?>
+            </div>
+            </div>
     </section>
+
         <script src="lib/jquery/jquery.min.js"></script>
         <script src="lib/jquery/jquery-migrate.min.js"></script>
         <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>

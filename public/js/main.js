@@ -108,3 +108,12 @@ jQuery(document).ready(function($) {
         }
     });
 });
+
+document.querySelector('#view-expenses-by-individual').addEventListener('click', function () {
+        document.querySelector('#viewchart').style.display = 'none';
+    document.querySelector('#viewexpenses').style.display = 'flex';
+})
+document.querySelector('#view-expenses-by-chart').addEventListener('click', function () {
+    document.querySelector('#viewexpenses').style.display = 'none';
+    document.querySelector('#viewchart').style.display = 'flex';
+})
