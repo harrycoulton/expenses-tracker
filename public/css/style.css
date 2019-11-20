@@ -333,7 +333,34 @@ body.mobile-nav-active #mobile-nav-toggle {
 /* Info section */
 
 section {
-    margin-top: 150px;
+    margin-top: 100px;
+}
+.section-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.section-header button {
+    background-color: #1b238c;
+    color: #51c6fe;
+    border-radius: 25px;
+    border: none;
+    padding: 10px;
+    margin: 0 40px 20px 40px;
+}
+
+.section-header button:hover {
+    background-color: #2632c7;
+    color: #aaeffe;
+}
+.section-header button:focus {
+    outline: none;
+}
+
+.section-header .on {
+    background-color: #2632c7;
+    color: #aaeffe;
 }
 
 .section-header .section-title {
@@ -366,6 +393,32 @@ section {
     padding-right: 100px;
     display: none;
 }
+
+.btn-primary {
+    background-color: #23324d;
+    border: none;
+    color: #1dc8cd;
+    margin: 7px;
+}
+
+.card-body {
+    width: 50%;
+    margin-bottom: 10px;
+    color: #1dc8cd;
+    background-color: #0c5460 !important;
+}
+
+.expense-card {
+    background-color: #0c5460 !important;
+    display: flex;
+    justify-content: space-between;
+} .expense-card input {
+    background: none;
+    border: none;
+  }.expense-card input:hover {
+       color: white;
+    cursor: pointer;
+   }
 
 
 /* Media queries (live at the bottom..) */

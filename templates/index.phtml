@@ -20,9 +20,8 @@ foreach ($monthTotalsByCat as $category => $monthTotal){
         <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
         <link href="lib/magnific-popup/magnific-popup.css" rel="stylesheet">
-        <link href="css/style.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js" integrity="sha256-arMsf+3JJK2LoTGqxfnuJPFTU4hAK57MtIPdFpiHXOU=" crossorigin="anonymous"></script>
-    </head>
+        <link href="css/style.css" rel="stylesheet"> </head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js" integrity="sha256-qSIshlknROr4J8GMHRlW3fGKrPki733tLq+qeMCR05Q=" crossorigin="anonymous"></script>
     <body>
     <header id="header">
         <div class="container">
@@ -48,11 +47,14 @@ foreach ($monthTotalsByCat as $category => $monthTotal){
         <div class="container-fluid">
             <div class="section-header">
                 <h3 class="section-title">Expenses in <?php echo date(F) ?></h3>
+                <div>
+                <button id="view-expenses-by-individual">View Expenses by individual date</button>
+                <button id="view-expenses-by-chart">View Chart</button>
+                </div>
             </div>
-            <button id="view-expenses-by-individual">View Expenses by individual date</button>
-            <button id="view-expenses-by-chart">View Chart</button>
+
             <div class="row" id="viewchart">
-                <div class="col-lg-8 wow fadeInLeft">
+                <div class="col-lg-8">
                         <canvas id="monthChart"></canvas>
                         <script>
                             var ctx = document.getElementById('monthChart');
@@ -107,7 +109,7 @@ foreach ($monthTotalsByCat as $category => $monthTotal){
             </div>
             <div class="row" id="viewexpenses">
                 <div class="col-lg-12 viewexpenses">
-            <div>
+            <div class="viewexpensesbuttons">
             <?php foreach ($expensesByDate as $timestamp => $expenselist) {
                 $date = date('d-m-y', $timestamp) ?>
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#<?php echo $date ?>" aria-expanded="false" aria-controls="<?php echo $date ?>"><?php echo $date ?></button>
@@ -120,7 +122,17 @@ foreach ($monthTotalsByCat as $category => $monthTotal){
                     <div class="collapse multi-collapse" id="<?php echo $date ?>">
                         <?php foreach ($expenselist as $expense) { ?>
                         <div class="card card-body">
-                            <?php echo $expense['expense-name'] ?>
+                            <div class="expense-card">
+                            <p>Expense: <?php echo $expense['expense-name'] ?></p>
+                            <p>Cost: £<?php echo $expense['expense-value'] ?></p>
+                            </div>
+                            <div class="expense-card">
+                                <p>Category: <?php echo $expense['category'] ?></p>
+                                <form method="post" action="/delete-expense" name="delete-expense">
+                                    <input type="hidden" name="delete-expense" value="<? echo $expense['id']?>">
+                                    <input type="submit" name="delete-expense" value="X Remove">
+                                </form>
+                            </div>
                         </div>
                         <?php } ?>
                     </div>
@@ -130,7 +142,6 @@ foreach ($monthTotalsByCat as $category => $monthTotal){
             </div>
             </div>
     </section>
-
         <script src="lib/jquery/jquery.min.js"></script>
         <script src="lib/jquery/jquery-migrate.min.js"></script>
         <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
