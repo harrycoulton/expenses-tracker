@@ -6,24 +6,30 @@ use Psr\Container\ContainerInterface;
 
 class GetThisMonthExpensesController
 {
-    private $model;
+    private $userModel;
+    private $expenseModel;
     private $view;
-    public $monthTotal;
+    private $monthTotal;
 
     /**
      * GetThisMonthExpensesController constructor.
-     * @param $model
+     * @param $userModel
+     * @param $expenseModel
      * @param $view
+     * @param $monthTotal
      */
-    public function __construct($model, $view)
+    public function __construct($userModel, $expenseModel, $view)
     {
-        $this->model = $model;
+        $this->userModel = $userModel;
+        $this->expenseModel = $expenseModel;
         $this->view = $view;
     }
 
+
     public function __invoke($request, $response)
     {
-        $expenses = $this->model->getExpenses();
+        $userInfo = $this->userModel->getUser();
+        $expenses = $this->expenseModel->getExpenses();
         foreach ($expenses as $key => $expense){
             $expenses[$key]['timestamp'] = strtotime($expense['date']);
         }
@@ -31,7 +37,9 @@ class GetThisMonthExpensesController
         $expensesByCat = $this->arrangeByCategory($expenses);
         $monthTotalsByCat = $this->getMonthTotalsByCat($expensesByCat);
         $monthTotalExpenditure = $this->monthTotal;
-        $this->view->render($response, 'this-month.phtml',  ['expensesByDate' => $expensesByDate,
+        $this->view->render($response, 'this-month.phtml',  [
+            'userInfo' => $userInfo[0],
+            'expensesByDate' => $expensesByDate,
                                                         'expensesByCat'  => $expensesByCat,
                                                          'monthTotalsByCat' => $monthTotalsByCat,
                                                         'monthTotalExpenditure' => $monthTotalExpenditure]);
