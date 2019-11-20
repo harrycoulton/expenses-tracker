@@ -83,6 +83,59 @@
                 </div>
             </div>
 
+            <div class="row" id="viewexpenses">
+                <div class="col-lg-8">
+                    <canvas id="savingsChart"></canvas>
+                    <script>
+                        var ctx = document.getElementById('savingsChart');
+                        var savingsChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: <?php echo json_encode($savingsLabels)?>,
+                                datasets: [{
+                                    label: '# of Votes',
+                                    data: <?php echo json_encode($savingsTotals)?>,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                tooltips: {
+                                    mode: 'label',
+                                    label: 'mylabel',
+                                    callbacks: {
+                                        label: function (tooltipItem, data) {
+                                            var value = Number(data.datasets[0].data[tooltipItem.index]).toFixed(2);
+                                            return '£' + value;
+                                        }, },
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+                <div class="col-lg-4">
+                        <h2>Your current savings target is <span class="highlight">£<?php echo $userInfo['savings-target'] ?></span></h2>
+                        <h2>So far, you've saved <span class="highlight">£<?php echo $userInfo['savings-total'] ?></span>,
+                            with <span class="highlight">£<?php echo $savingsRemaining ?></span> remaining of the target</h2>
+                        <h2>If you were to save 10% of your current monthly budget, it would take <span class="highlight"><?php echo number_format((($savingsRemaining/($userInfo['budget']/10))), 0)?></span>
+                            months, or <span class="highlight"><?php echo number_format((($savingsRemaining/($userInfo['budget']/10))/12), 0)?></span> years to reach your target.</h2>
+                </div>
+            </div>
             <div class="row " id="viewchart">
                     <?php if ($budgetRemaining >= 0){ ?>
                     <div class="col-lg-8">
@@ -143,55 +196,6 @@
                         <h2><a href="">Need money help? Click here</a></h2>
                     </div>
                 <?php } ?>
-            </div>
-            <div class="row" id="viewexpenses">
-                <div class="col-lg-8">
-                    <canvas id="savingsChart"></canvas>
-                    <script>
-                        var ctx = document.getElementById('savingsChart');
-                        var savingsChart = new Chart(ctx, {
-                            type: 'doughnut',
-                            data: {
-                                labels: <?php echo json_encode($savingsLabels)?>,
-                                datasets: [{
-                                    label: '# of Votes',
-                                    data: <?php echo json_encode($savingsTotals)?>,
-                                    backgroundColor: [
-                                        'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)'
-                                    ],
-                                    borderColor: [
-                                        'rgba(255, 99, 132, 1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)'
-                                    ],
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                tooltips: {
-                                    mode: 'label',
-                                    label: 'mylabel',
-                                    callbacks: {
-                                        label: function (tooltipItem, data) {
-                                            var value = Number(data.datasets[0].data[tooltipItem.index]).toFixed(2);
-                                            return '£' + value;
-                                        }, },
-                                }
-                            }
-                        });
-                    </script>
-                </div>
-                <div class="col-lg-4 content wow fadeInRight">
-
-                </div>
             </div>
     </section>
     <footer>
