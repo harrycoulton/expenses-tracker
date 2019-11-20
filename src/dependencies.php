@@ -4,6 +4,7 @@ use Example\Factories\AddExpenseControllerFactory;
 use Example\Factories\DeleteExpenseControllerFactory;
 use Example\Factories\DashboardControllerFactory;
 use Example\Factories\ExpenseModelFactory;
+use Example\Factories\GetLast7DaysControllerFactory;
 use Example\Factories\GetThisMonthExpensesControllerFactory;
 use Example\Factories\UpdateBudgetControllerFactory;
 use Example\Factories\UpdateSavingsTargetControllerFactory;
@@ -38,4 +39,5 @@ return function (App $app) {
     $container['UpdateBudgetController'] = new UpdateBudgetControllerFactory();
     $container['UpdateSavingsTotalController'] = new UpdateSavingsTotalControllerFactory();
     $container['UpdateSavingsTargetController'] = new UpdateSavingsTargetControllerFactory();
+    $container['GetLast7DaysController'] = new GetLast7DaysControllerFactory();
 };

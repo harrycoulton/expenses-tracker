@@ -8,6 +8,7 @@ return function (App $app) {
     $container = $app->getContainer();
     $app->get('/', 'DashboardController');
     $app->get('/this-month', 'GetThisMonthExpensesController');
+    $app->get('/last-7-days', 'GetLast7DaysController');
     $app->post('/add', 'AddExpenseController');
     $app->post('/delete', 'DeleteExpenseController');
     $app->post('/update-budget', 'UpdateBudgetController');

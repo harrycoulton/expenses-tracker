@@ -11,9 +11,10 @@ class GetThisMonthExpensesControllerFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        $model = $container->get('ExpenseModel');
+        $userModel = $container->get('UserModel');
+        $expenseModel = $container->get('ExpenseModel');
         $view = $container->get('renderer');
-        $getThisMonthExpensesController = new GetThisMonthExpensesController($model, $view);
+        $getThisMonthExpensesController = new GetThisMonthExpensesController($userModel, $expenseModel, $view);
         return $getThisMonthExpensesController;
     }
 }
