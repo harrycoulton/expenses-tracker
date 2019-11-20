@@ -34,6 +34,11 @@ jQuery(document).ready(function($) {
         speed: 400
     });
 
+    // Bootstrap collapse tidier
+    $('button').click( function(e) {
+        $('.collapse').collapse('hide');
+    });
+
     // Mobile Navigation
     if ($('#nav-menu-container').length) {
         var $mobile_nav = $('#nav-menu-container').clone().prop({

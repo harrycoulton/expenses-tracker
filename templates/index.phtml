@@ -49,11 +49,11 @@ foreach ($monthTotalsByCat as $category => $monthTotal){
                 <h3 class="section-title">Expenses in <?php echo date(F) ?></h3>
                 <div>
                 <button id="view-expenses-by-individual">View Expenses by individual date</button>
-                <button id="view-expenses-by-chart">View Chart</button>
+                <button id="view-expenses-by-chart" class="on">View Chart</button>
                 </div>
             </div>
 
-            <div class="row" id="viewchart">
+            <div class="row " id="viewchart" >
                 <div class="col-lg-8">
                         <canvas id="monthChart"></canvas>
                         <script>
