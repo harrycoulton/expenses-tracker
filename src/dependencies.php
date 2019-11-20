@@ -2,6 +2,7 @@
 
 use Example\Factories\AddExpenseControllerFactory;
 use Example\Factories\DeleteExpenseControllerFactory;
+use Example\Factories\DashboardControllerFactory;
 use Example\Factories\ExpenseModelFactory;
 use Example\Factories\GetThisMonthExpensesControllerFactory;
 use Example\Factories\UserModelFactory;
@@ -27,6 +28,7 @@ return function (App $app) {
 
     $container['UserModel'] = new UserModelFactory();
     $container['ExpenseModel'] = new ExpenseModelFactory();
+    $container['DashboardController'] = new DashboardControllerFactory();
     $container['GetThisMonthExpensesController'] = new GetThisMonthExpensesControllerFactory();
     $container['AddExpenseController'] = new AddExpenseControllerFactory();
     $container['DeleteExpenseController'] = new DeleteExpenseControllerFactory();

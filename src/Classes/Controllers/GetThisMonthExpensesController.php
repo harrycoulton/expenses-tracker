@@ -8,7 +8,7 @@ class GetThisMonthExpensesController
 {
     private $model;
     private $view;
-    private $monthTotal;
+    public $monthTotal;
 
     /**
      * GetThisMonthExpensesController constructor.
@@ -50,7 +50,7 @@ class GetThisMonthExpensesController
         public function arrangeByCategory($expenses) {
             $expenseByCategory = [];
             foreach ($expenses as $expense) {
-                if ($expense['timestamp'] > strtotime('midnight first day of this month')) {
+                if ($expense['timestamp'] > strtotime('midnight last day of last month')) {
                     $expenseByCategory[$expense['category']][] = $expense;
                 };
             }
@@ -61,14 +61,14 @@ class GetThisMonthExpensesController
             $monthCatTotals = [];
             foreach ($expensesByCat as $expenseList) {
                 foreach ($expenseList as $expense) {
-                    if ($expense['timestamp'] > strtotime('midnight first day of this month')) {
+                    if ($expense['timestamp'] > strtotime('midnight last day of last month')) {
                         $this->monthTotal = ($this->monthTotal + $expense['expense-value']);
                          };
                 }
             }
             foreach ($expensesByCat as $expenseList) {
                 foreach ($expenseList as $expense) {
-                    if ($expense['timestamp'] > strtotime('midnight first day of this month')){
+                    if ($expense['timestamp'] > strtotime('midnight last day of last month')){
                         $monthCatTotals[$expense['category']]['monthTotal'] += $expense['expense-value'];
                         $monthCatTotals[$expense['category']]['monthPercentage'] = number_format((($monthCatTotals[$expense['category']]['monthTotal']/$this->monthTotal)*100), 2);
                     };
