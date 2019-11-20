@@ -17,4 +17,14 @@ class UserModel
         $this->db = $db;
     }
 
+    /**
+     * Gets UserInfo from the database
+     * @return mixed
+     */
+    public function getUser()
+    {
+        $query = $this->db->query('SELECT `id`, `username`, `budget`, `savings-target`, `savings-total` FROM  `users` ORDER BY `id`');
+        $expenses = $query->fetchAll();
+        return $expenses;
+    }
 }
