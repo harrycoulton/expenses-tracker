@@ -148,7 +148,7 @@ h6 {
     color: #1dc8cd;
 }
 
-#add-expense {
+.nav-form {
     display: flex;
     flex-direction: column;
 }
@@ -463,6 +463,7 @@ section {
     text-align: center;
     font-weight: 400;
     position: relative;
+    padding-top: 15px;
 }
 
 .section-header .section-description {

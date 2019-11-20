@@ -27,4 +27,14 @@ class UserModel
         $expenses = $query->fetchAll();
         return $expenses;
     }
+
+    /**
+     * @param mixed $db
+     */
+    public function setBudget($formData)
+    {
+        $query = $this->db->prepare("UPDATE users SET budget=:budget  WHERE id=:id");
+        $query->execute(['budget' => $formData['budget'] ,'id' => $formData['id']]);
+    }
+
 }

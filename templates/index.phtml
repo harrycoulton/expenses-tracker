@@ -22,15 +22,15 @@
         <link href="lib/magnific-popup/magnific-popup.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet"> </head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js" integrity="sha256-qSIshlknROr4J8GMHRlW3fGKrPki733tLq+qeMCR05Q=" crossorigin="anonymous"></script>
-    <body>
+    <body id="scrollUp">
     <header id="header">
         <div class="container">
             <div id="title" class="pull-left">
-                <h1><a href="/" class="scrollto"><span class="highlight">Expenses Tracker</span></a></h1>
+                <h1><a href="#scrollUp" class="scrollto"><span class="highlight">Expenses Tracker</span></a></h1>
             </div>
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
-                    <li class="menu-active"><a href="/">Home</a></li>
+                    <li class="menu-active"><a href="#view">Home</a></li>
                     <li class="menu-has-children"><a href="">View Expenses</a>
                         <ul>
                             <li><a href="/this-month">This month</a></li>
@@ -42,7 +42,7 @@
                     <li class="menu-has-children" ><a href="">Add Expense</a>
                         <ul>
                             <li>
-                                <form method="post" action="/add" id="add-expense">
+                                <form method="post" action="/add" class="nav-form">
                                     <label for="expense-name" class="form">Expense name:</label>
                                     <input type="text" name="expense-name" id="expense-name" required>
                                     <label for="expense-value" class="form">Cost of Expense:</label>
@@ -55,8 +55,21 @@
                                         <option value="Drink">Drink</option>
                                         <option value="Drugs">Drugs</option>
                                     </select>
-                                    <input type="hidden" value="/this-month" name="redirect">
-                                    <input type="submit" value="SEND">
+                                    <input type="hidden" value="/" name="redirect">
+                                    <input type="submit" value="Add new expense">
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-has-children" ><a href="">User</a>
+                        <ul>
+                            <li>
+                                <form method="post" action="/update-budget" class="nav-form">
+                                    <label for="budget" class="form">New monthly budget in £:</label>
+                                    <input type="text" name="budget" id="budget" required>
+                                    <input type="hidden" value="<?php echo $userInfo['id'] ?>" name="id">
+                                    <input type="hidden" value="/" name="redirect">
+                                    <input type="submit" value="Update budget">
                                 </form>
                             </li>
                         </ul>
@@ -76,7 +89,7 @@
         <section id="view" class="section-bg">
         <div class="container-fluid">
             <div class="section-header">
-                <h3 class="section-title">Expenses in <?php echo date(F) ?></h3>
+                <h3 class="section-title"><?php echo date('F-Y') ?></h3>
                 <div>
                     <button id="view-expenses-by-individual">Savings View</button>
                     <button id="view-expenses-by-chart" class="on">Budget View</button>
@@ -138,7 +151,7 @@
             </div>
             <div class="row " id="viewchart">
                     <?php if ($budgetRemaining >= 0){ ?>
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 content wow fadeInDown">
                         <canvas id="monthChart"></canvas>
                         <script>
                             var ctx = document.getElementById('monthChart');
