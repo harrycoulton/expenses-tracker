@@ -2,9 +2,9 @@
     $budgetRemaining = ($userInfo['budget']-$monthTotalExpenditure);
     $budgetLabels = ["Month's Budget Spent", "Month's Budget Remaining"];
     $budgetTotals = [$monthTotalExpenditure, $budgetRemaining];
-    $savingsRemaining = ($userInfo['savings-target']-$userInfo['savings-total']);
+    $savingsRemaining = ($userInfo['savings-target']-$userInfo['savingstotal']);
     $savingsLabels = ["Remainder of target", "Savings so far"];
-    $savingsTotals = [$savingsRemaining, $userInfo['savings-total']];
+    $savingsTotals = [$savingsRemaining, $userInfo['savingstotal']];
     ?>
     <!DOCTYPE html>
     <html>
@@ -70,6 +70,13 @@
                                     <input type="hidden" value="<?php echo $userInfo['id'] ?>" name="id">
                                     <input type="hidden" value="/" name="redirect">
                                     <input type="submit" value="Update budget">
+                                </form>
+                                <form method="post" action="/update-savings" class="nav-form">
+                                    <label for="savings" class="form">Add to or remove from savings:</label>
+                                    <input type="number" name="savingstotal" id="savings" required>
+                                    <input type="hidden" value="<?php echo $userInfo['id'] ?>" name="id">
+                                    <input type="hidden" value="/" name="redirect">
+                                    <input type="submit" value="Update savings">
                                 </form>
                             </li>
                         </ul>
@@ -143,7 +150,7 @@
                 </div>
                 <div class="col-lg-4">
                         <h2>Your current savings target is <span class="highlight">£<?php echo $userInfo['savings-target'] ?></span></h2>
-                        <h2>So far, you've saved <span class="highlight">£<?php echo $userInfo['savings-total'] ?></span>,
+                        <h2>So far, you've saved <span class="highlight">£<?php echo $userInfo['savingstotal'] ?></span>,
                             with <span class="highlight">£<?php echo $savingsRemaining ?></span> remaining of the target</h2>
                         <h2>If you were to save 10% of your current monthly budget, it would take <span class="highlight"><?php echo number_format((($savingsRemaining/($userInfo['budget']/10))), 0)?></span>
                             months, or <span class="highlight"><?php echo number_format((($savingsRemaining/($userInfo['budget']/10))/12), 0)?></span> years to reach your target.</h2>
