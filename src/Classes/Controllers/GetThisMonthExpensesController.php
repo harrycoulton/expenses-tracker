@@ -9,7 +9,7 @@ class GetThisMonthExpensesController
     private $userModel;
     private $expenseModel;
     private $view;
-    private $monthTotal;
+    public $monthTotal;
 
     /**
      * GetThisMonthExpensesController constructor.
