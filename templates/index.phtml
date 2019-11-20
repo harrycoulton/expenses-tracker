@@ -130,7 +130,7 @@ foreach ($monthTotalsByCat as $category => $monthTotal){
                                 <p>Category: <?php echo $expense['category'] ?></p>
                                 <form method="post" action="/delete-expense" name="delete-expense">
                                     <input type="hidden" name="delete-expense" value="<? echo $expense['id']?>">
-                                    <input type="submit" name="delete-expense" value="X Remove">
+                                    <input type="submit" name="delete-expense" value="Delete">
                                 </form>
                             </div>
                         </div>
