@@ -153,6 +153,11 @@ h6 {
     min-width: 180px;
 }
 
+#add-expense {
+    display: flex;
+    flex-direction: column;
+}
+
 /* Nav meny arrows */
 
 .sf-arrows .sf-with-ul {
