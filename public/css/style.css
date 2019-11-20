@@ -151,10 +151,12 @@ h6 {
 .nav-form {
     display: flex;
     flex-direction: column;
+    max-width: 200px;
 }
 
 .nav-menu form {
     color: #aaeffe;
+    font-size: 0.8rem;
 }
 
 .nav-menu input {

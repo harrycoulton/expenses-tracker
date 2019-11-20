@@ -2,7 +2,7 @@
     $budgetRemaining = ($userInfo['budget']-$monthTotalExpenditure);
     $budgetLabels = ["Month's Budget Spent", "Month's Budget Remaining"];
     $budgetTotals = [$monthTotalExpenditure, $budgetRemaining];
-    $savingsRemaining = ($userInfo['savings-target']-$userInfo['savingstotal']);
+    $savingsRemaining = ($userInfo['savingstarget']-$userInfo['savingstotal']);
     $savingsLabels = ["Remainder of target", "Savings so far"];
     $savingsTotals = [$savingsRemaining, $userInfo['savingstotal']];
     ?>
@@ -66,17 +66,24 @@
                             <li>
                                 <form method="post" action="/update-budget" class="nav-form">
                                     <label for="budget" class="form">New monthly budget in £:</label>
-                                    <input type="text" name="budget" id="budget" required>
+                                    <input type="number" name="budget" id="budget" required>
                                     <input type="hidden" value="<?php echo $userInfo['id'] ?>" name="id">
                                     <input type="hidden" value="/" name="redirect">
                                     <input type="submit" value="Update budget">
                                 </form>
-                                <form method="post" action="/update-savings" class="nav-form">
+                                <form method="post" action="/update-savings-total" class="nav-form">
                                     <label for="savings" class="form">Add to or remove from savings:</label>
                                     <input type="number" name="savingstotal" id="savings" required>
                                     <input type="hidden" value="<?php echo $userInfo['id'] ?>" name="id">
                                     <input type="hidden" value="/" name="redirect">
-                                    <input type="submit" value="Update savings">
+                                    <input type="submit" value="Update savings total">
+                                </form>
+                                <form method="post" action="/update-savings-target" class="nav-form">
+                                    <label for="savingstarget" class="form">Update savings target in £</label>
+                                    <input type="number" name="savingstarget" id="savings" required>
+                                    <input type="hidden" value="<?php echo $userInfo['id'] ?>" name="id">
+                                    <input type="hidden" value="/" name="redirect">
+                                    <input type="submit" value="Update savings target">
                                 </form>
                             </li>
                         </ul>
@@ -149,7 +156,7 @@
                     </script>
                 </div>
                 <div class="col-lg-4">
-                        <h2>Your current savings target is <span class="highlight">£<?php echo $userInfo['savings-target'] ?></span></h2>
+                        <h2>Your current savings target is <span class="highlight">£<?php echo $userInfo['savingstarget'] ?></span></h2>
                         <h2>So far, you've saved <span class="highlight">£<?php echo $userInfo['savingstotal'] ?></span>,
                             with <span class="highlight">£<?php echo $savingsRemaining ?></span> remaining of the target</h2>
                         <h2>If you were to save 10% of your current monthly budget, it would take <span class="highlight"><?php echo number_format((($savingsRemaining/($userInfo['budget']/10))), 0)?></span>

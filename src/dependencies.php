@@ -6,6 +6,7 @@ use Example\Factories\DashboardControllerFactory;
 use Example\Factories\ExpenseModelFactory;
 use Example\Factories\GetThisMonthExpensesControllerFactory;
 use Example\Factories\UpdateBudgetControllerFactory;
+use Example\Factories\UpdateSavingsTargetControllerFactory;
 use Example\Factories\UpdateSavingsTotalControllerFactory;
 use Example\Factories\UserModelFactory;
 use Slim\App;
@@ -36,5 +37,5 @@ return function (App $app) {
     $container['DeleteExpenseController'] = new DeleteExpenseControllerFactory();
     $container['UpdateBudgetController'] = new UpdateBudgetControllerFactory();
     $container['UpdateSavingsTotalController'] = new UpdateSavingsTotalControllerFactory();
-
+    $container['UpdateSavingsTargetController'] = new UpdateSavingsTargetControllerFactory();
 };

@@ -11,5 +11,6 @@ return function (App $app) {
     $app->post('/add', 'AddExpenseController');
     $app->post('/delete', 'DeleteExpenseController');
     $app->post('/update-budget', 'UpdateBudgetController');
-    $app->post('/update-savings', 'UpdateSavingsTotalController');
+    $app->post('/update-savings-total', 'UpdateSavingsTotalController');
+    $app->post('/update-savings-target', 'UpdateSavingsTargetController');
 };

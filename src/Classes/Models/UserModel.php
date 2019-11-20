@@ -23,7 +23,7 @@ class UserModel
      */
     public function getUser()
     {
-        $query = $this->db->query('SELECT `id`, `username`, `budget`, `savings-target`, `savingstotal` FROM  `users` ORDER BY `id`');
+        $query = $this->db->query('SELECT `id`, `username`, `budget`, `savingstarget`, `savingstotal` FROM  `users` ORDER BY `id`');
         $expenses = $query->fetchAll();
         return $expenses;
     }
@@ -43,6 +43,14 @@ class UserModel
     {
         $query = $this->db->prepare("UPDATE users SET savingstotal=:savingstotal  WHERE id=:id");
         $query->execute(['savingstotal' => $formData['savingstotal'] ,'id' => $formData['id']]);
+    }
+    /**
+     * @param mixed $db
+     */
+    public function setSavingsTarget($formData)
+    {
+        $query = $this->db->prepare("UPDATE users SET savingstarget=:savingstarget  WHERE id=:id");
+        $query->execute(['savingstarget' => $formData['savingstarget'] ,'id' => $formData['id']]);
     }
 
 }
