@@ -423,11 +423,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 /* Info section */
 
 #view {
-<<<<<<< HEAD
-    min-height: 110vh;
-=======
     min-height: 105vh;
->>>>>>> userinfo
 }
 
 section {
@@ -529,10 +525,34 @@ footer {
 }
 .highlight {
     color: #1dc8cd;
+}
 
    .normal {
        color: #4383fe;
    }
+
+
+   #warning {
+       width: 100%;
+       text-align: center;
+       margin: 40px;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;;
+   } #warning h1 {
+            border: 4px solid red;
+            color: red;
+            width:80%;
+            padding: 15px;
+    margin-bottom: 50px;
+        }
+     #warning h2 {
+         border: 3px solid #50ffb1;
+         color: #4383fe;
+         width:80%;
+         padding: 15px;
+     }
 
 /* Media queries (live at the bottom..) */
 

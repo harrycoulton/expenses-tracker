@@ -39,7 +39,7 @@ class DashboardController
         $expensesByCat = $this->monthData->arrangeByCategory($expenses);
         $monthTotalsByCat = $this->monthData->getMonthTotalsByCat($expensesByCat);
         $monthTotalExpenditure = $this->monthData->monthTotal;
-        $this->view->render($response, 'dashboard.phtml',  [
+        $this->view->render($response, 'index.phtml',  [
               'userInfo' => $userInfo[0],
             'expensesByDate' => $expensesByDate,
             'expensesByCat'  => $expensesByCat,

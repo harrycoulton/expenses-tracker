@@ -31,7 +31,7 @@ class GetThisMonthExpensesController
         $expensesByCat = $this->arrangeByCategory($expenses);
         $monthTotalsByCat = $this->getMonthTotalsByCat($expensesByCat);
         $monthTotalExpenditure = $this->monthTotal;
-        $this->view->render($response, 'index.phtml',  ['expensesByDate' => $expensesByDate,
+        $this->view->render($response, 'this-month.phtml',  ['expensesByDate' => $expensesByDate,
                                                         'expensesByCat'  => $expensesByCat,
                                                          'monthTotalsByCat' => $monthTotalsByCat,
                                                         'monthTotalExpenditure' => $monthTotalExpenditure]);
@@ -40,7 +40,7 @@ class GetThisMonthExpensesController
     public function arrangeByDate($expenses) {
         $expenseByDate = [];
             foreach ($expenses as $expense) {
-                if ($expense['timestamp'] > strtotime('midnight first day of this month')) {
+                if ($expense['timestamp'] > strtotime('midnight last day of last month')) {
                     $expenseByDate[$expense['timestamp']][] = $expense;
                 };
             }
