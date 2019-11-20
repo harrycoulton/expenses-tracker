@@ -16,5 +16,7 @@ return function (App $app) {
     });
 
     $app->get('/this-month', 'GetThisMonthExpensesController');
+    $app->post('/add', 'AddExpenseController');
+
 
 };

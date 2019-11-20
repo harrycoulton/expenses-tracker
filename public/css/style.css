@@ -158,6 +158,21 @@ h6 {
     flex-direction: column;
 }
 
+.nav-menu form {
+    color: #aaeffe;
+}
+
+.nav-menu input {
+    background: none;
+    border: 1px solid #8ae2ff;
+    color: #1dc8cd;
+}
+
+.nav-menu select {
+    background: none;
+    color: #aaeffe;
+}
+
 /* Nav meny arrows */
 
 .sf-arrows .sf-with-ul {
@@ -336,6 +351,10 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 /* Info section */
+
+#view {
+    min-height: 110vh;
+}
 
 section {
     margin-top: 100px;

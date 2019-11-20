@@ -1,5 +1,6 @@
 <?php
 
+use Example\Factories\AddExpenseControllerFactory;
 use Example\Factories\ExpenseModelFactory;
 use Example\Factories\GetThisMonthExpensesControllerFactory;
 use Example\Factories\UserModelFactory;
@@ -26,5 +27,6 @@ return function (App $app) {
     $container['UserModel'] = new UserModelFactory();
     $container['ExpenseModel'] = new ExpenseModelFactory();
     $container['GetThisMonthExpensesController'] = new GetThisMonthExpensesControllerFactory();
+    $container['AddExpenseController'] = new AddExpenseControllerFactory();
 
 };

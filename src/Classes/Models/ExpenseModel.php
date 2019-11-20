@@ -34,9 +34,8 @@ class ExpenseModel
      */
     public function createExpense($formData)
     {
-        $sql = "INSERT INTO `expenses` (`id`, `expense-name`, `expense-value`, `date`, `category`) VALUES (NULL, :expenseName, :expenseValue, :date, :category)";
-        $query = $this->db->prepare($sql);
-        $query->execute(['expenseName' => $formData['expenseName'], 'expenseValue' => $formData['expenseValue'], 'date' => $formData['date'], 'category' => $formData['category']]);
+        $query = $this->db->prepare("INSERT INTO `expenses` (`expense-name`, `expense-value`, `date`, `category`) VALUES (:expenseName, :expenseValue, :dateof, :category)");
+        $query->execute(['expenseName' => $formData['expense-name'], 'expenseValue' => $formData['expense-value'], 'dateof' => $formData['date'], 'category' => $formData['category']]);
     }
 
     /**

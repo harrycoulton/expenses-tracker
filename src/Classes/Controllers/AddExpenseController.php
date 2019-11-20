@@ -23,13 +23,7 @@ class AddExpenseController
     public function __invoke($request, $response)
     {
         $formData = $request->getParsedBody();
-        if (!empty($formData['expenseName'])) {
-//            if (empty($formData['date'])){
-//                $formData['deadlineDate'] = NULL;
-//            }
-            $this->model->createExpense($formData);
-        }
-        return $response->withRedirect('/');
-//        var_dump($formData['deadlineDate']);
+        $this->model->createExpense($formData);
+        return $response->withRedirect($formData['redirect']);
     }
 }
