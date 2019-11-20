@@ -1,16 +1,15 @@
 <?php
-$monthCats = [];
-$monthPercentage = [];
-foreach ($monthTotalsByCat as $category => $monthTotal){
-    array_push($monthCats, $category);
-    array_push($monthPercentage, $monthTotal['monthPercentage']);
-}
-?>
-<!DOCTYPE html>
-<html>
+    $budgetRemaining = ($userInfo['budget']-$monthTotalExpenditure);
+    $chartLabels = ["Month's Budget Spent", "Month's Budget Remaining"];
+    $chartTotals = [$monthTotalExpenditure, $budgetRemaining];
+    var_dump($chartLabels);
+    var_dump($chartTotals);
+    ?>
+    <!DOCTYPE html>
+    <html>
     <head>
         <meta charset="utf-8"/>
-        <title>This months' expenses</title>
+        <title>Slim 3</title>
         <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
         <link href="img/favicon.png" rel="icon">
         <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -21,7 +20,7 @@ foreach ($monthTotalsByCat as $category => $monthTotal){
         <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
         <link href="lib/magnific-popup/magnific-popup.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet"> </head>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js" integrity="sha256-qSIshlknROr4J8GMHRlW3fGKrPki733tLq+qeMCR05Q=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js" integrity="sha256-qSIshlknROr4J8GMHRlW3fGKrPki733tLq+qeMCR05Q=" crossorigin="anonymous"></script>
     <body>
     <header id="header">
         <div class="container">
@@ -39,143 +38,128 @@ foreach ($monthTotalsByCat as $category => $monthTotal){
                             <li><a href="/this-year">This year</a></li>
                         </ul>
                     </li>
-                    <li class="menu-has-children" ><a href="">Add Expense</a>
-                        <ul>
-                            <li>
-                                <form method="post" action="/add" id="add-expense">
-                                    <label for="expense-name" class="form">Expense name:</label>
-                                    <input type="text" name="expense-name" id="expense-name" required>
-                                    <label for="expense-value" class="form">Cost of Expense:</label>
-                                    <input type="number" name="expense-value" id="expense-value" step=".01" required>
-                                    <label for="date" class="form">Date of Expense:</label>
-                                    <input type="date" name="date" id="date" required>
-                                    <label for="category" class="form">Category of Expense:</label>
-                                    <select name="category" id="category" required>
-                                        <option value="Food">Food</option>
-                                        <option value="Drink">Drink</option>
-                                        <option value="Drugs">Drugs</option>
-                                    </select>
-                                    <input type="hidden" value="/this-month" name="redirect">
-                                    <input type="submit" value="SEND">
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
             </nav>
         </div>
     </header>
-    <section id="view" class="section-bg">
+    <section id="intro">
+
+        <div class="intro-text">
+            <h2><span class="normal">Welcome,</span>  <?php echo $userInfo['username']?></h2>
+            <a href="#view" class="btn-get-started scrollto">Get Started</a>
+        </div>
+    </section>
+
+        <section id="view" class="section-bg">
         <div class="container-fluid">
             <div class="section-header">
                 <h3 class="section-title">Expenses in <?php echo date(F) ?></h3>
                 <div>
-                <button id="view-expenses-by-individual">View Expenses by individual date</button>
-                <button id="view-expenses-by-chart" class="on">View Chart</button>
+                    <button id="view-expenses-by-individual">View Expenses by individual date</button>
+                    <button id="view-expenses-by-chart" class="on">View Chart</button>
                 </div>
             </div>
 
             <div class="row " id="viewchart" >
                 <div class="col-lg-8">
-                        <canvas id="monthChart"></canvas>
-                        <script>
-                            var ctx = document.getElementById('monthChart');
-                            var monthChart = new Chart(ctx, {
-                                type: 'doughnut',
-                                data: {
-                                    labels: <?php echo json_encode($monthCats)?>,
-                                    datasets: [{
-                                        label: '# of Votes',
-                                        data: <?php echo json_encode($monthPercentage)?>,
-                                        backgroundColor: [
-                                            'rgba(255, 99, 132, 0.2)',
-                                            'rgba(54, 162, 235, 0.2)',
-                                            'rgba(255, 206, 86, 0.2)',
-                                            'rgba(75, 192, 192, 0.2)',
-                                            'rgba(153, 102, 255, 0.2)',
-                                            'rgba(255, 159, 64, 0.2)'
-                                        ],
-                                        borderColor: [
-                                            'rgba(255, 99, 132, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)'
-                                        ],
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    tooltips: {
-                                        mode: 'label',
-                                        label: 'mylabel',
-                                        callbacks: {
-                                            label: function (tooltipItem, data) {
-                                                var value = Number(data.datasets[0].data[tooltipItem.index]).toFixed(2);
-                                                return value+'%';
-                                            }, },
-                                    }
+                    <canvas id="monthChart"></canvas>
+                    <script>
+                        var ctx = document.getElementById('monthChart');
+                        var monthChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: <?php echo json_encode($chartLabels)?>,
+                                datasets: [{
+                                    label: '# of Votes',
+                                    data: <?php echo json_encode($chartTotals)?>,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                tooltips: {
+                                    mode: 'label',
+                                    label: 'mylabel',
+                                    callbacks: {
+                                        label: function (tooltipItem, data) {
+                                            var value = Number(data.datasets[0].data[tooltipItem.index]).toFixed(2);
+                                            return '£' + value;
+                                        }, },
                                 }
-                            });
-                        </script>
+                            }
+                        });
+                    </script>
                 </div>
                 <div class="col-lg-4 content wow fadeInRight">
                     <h2>So far this month, you've spent:</h2>
                     <?php
                     foreach ($monthTotalsByCat as $category => $monthTotal){
-                        echo '<p><span class="highlight"> £'.$monthTotal['monthTotal'].'</span> on '.$category.'</p>';
+                        echo '<p>£'.$monthTotal['monthTotal'].' on '.$category.'</p>';
                     }
                     ?>
                 </div>
             </div>
             <div class="row" id="viewexpenses">
                 <div class="col-lg-12 viewexpenses">
-            <div class="viewexpensesbuttons">
-            <?php foreach ($expensesByDate as $timestamp => $expenselist) {
-                $date = date('d-m-y', $timestamp) ?>
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#<?php echo $date ?>" aria-expanded="false" aria-controls="<?php echo $date ?>"><?php echo $date ?></button>
-            <?php } ?>
-            </div>
-            <?php foreach ($expensesByDate as $timestamp => $expenselist) {
-            $date = date('d-m-y', $timestamp) ?>
-            <div class="row">
-                <div class="col">
-                    <div class="collapse multi-collapse" id="<?php echo $date ?>">
-                        <?php foreach ($expenselist as $expense) { ?>
-                        <div class="card card-body">
-                            <div class="expense-card">
-                            <p>Expense: <?php echo $expense['expense-name'] ?></p>
-                            <p>Cost: £<?php echo $expense['expense-value'] ?></p>
-                            </div>
-                            <div class="expense-card">
-                                <p>Category: <?php echo $expense['category'] ?></p>
-                                <form method="post" action="/delete" name="delete-expense">
-                                    <input type="hidden" name="delete-expense" value="<? echo $expense['id']?>">
-                                    <input type="hidden" name="redirect" value="/this-month">
-                                    <input type="submit" value="Delete">
-                                </form>
-                            </div>
-                        </div>
+                    <div class="viewexpensesbuttons">
+                        <?php foreach ($expensesByDate as $timestamp => $expenselist) {
+                            $date = date('d-m-y', $timestamp) ?>
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#<?php echo $date ?>" aria-expanded="false" aria-controls="<?php echo $date ?>"><?php echo $date ?></button>
                         <?php } ?>
                     </div>
+                    <?php foreach ($expensesByDate as $timestamp => $expenselist) {
+                        $date = date('d-m-y', $timestamp) ?>
+                        <div class="row">
+                            <div class="col">
+                                <div class="collapse multi-collapse" id="<?php echo $date ?>">
+                                    <?php foreach ($expenselist as $expense) { ?>
+                                        <div class="card card-body">
+                                            <div class="expense-card">
+                                                <p>Expense: <?php echo $expense['expense-name'] ?></p>
+                                                <p>Cost: £<?php echo $expense['expense-value'] ?></p>
+                                            </div>
+                                            <div class="expense-card">
+                                                <p>Category: <?php echo $expense['category'] ?></p>
+                                                <form method="post" action="/delete-expense" name="delete-expense">
+                                                    <input type="hidden" name="delete-expense" value="<? echo $expense['id']?>">
+                                                    <input type="submit" name="delete-expense" value="Delete">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
                 </div>
-            </div>
-            <?php } ?>
-            </div>
             </div>
     </section>
     <footer>
         <h2>View more of my portfolio at <a href="https://hcoulton.tech"> hcoulton.tech</a></h2>
     </footer>
-        <script src="lib/jquery/jquery.min.js"></script>
-        <script src="lib/jquery/jquery-migrate.min.js"></script>
-        <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/wow/wow.min.js"></script>
-        <script src="lib/superfish/hoverIntent.js"></script>
-        <script src="lib/superfish/superfish.min.js"></script>
-        <script src="lib/magnific-popup/magnific-popup.min.js"></script>
-        <script src="js/main.js"></script>
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/jquery/jquery-migrate.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/superfish/hoverIntent.js"></script>
+    <script src="lib/superfish/superfish.min.js"></script>
+    <script src="lib/magnific-popup/magnific-popup.min.js"></script>
+    <script src="js/main.js"></script>
     </body>
-</html>
+    </html>
