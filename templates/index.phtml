@@ -26,7 +26,7 @@ foreach ($monthTotalsByCat as $category => $monthTotal){
     <header id="header">
         <div class="container">
             <div id="title" class="pull-left">
-                <h1><a href="#intro" class="scrollto">Expenses Tracker</a></h1>
+                <h1><a href="#intro" class="scrollto"><span class="highlight">Expenses Tracker</span> </a></h1>
             </div>
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
@@ -102,7 +102,7 @@ foreach ($monthTotalsByCat as $category => $monthTotal){
                     <h2>So far this month, you've spent:</h2>
                     <?php
                     foreach ($monthTotalsByCat as $category => $monthTotal){
-                        echo '<p>£'.$monthTotal['monthTotal'].' on '.$category.'</p>';
+                        echo '<p><span class="highlight">£'.$monthTotal['monthTotal'].'</span> on '.$category.'</p>';
                     }
                     ?>
                 </div>
@@ -142,6 +142,9 @@ foreach ($monthTotalsByCat as $category => $monthTotal){
             </div>
             </div>
     </section>
+    <footer>
+        <h2>View more of my portfolio at <a href="https://hcoulton.tech"> hcoulton.tech</a></h2>
+    </footer>
         <script src="lib/jquery/jquery.min.js"></script>
         <script src="lib/jquery/jquery-migrate.min.js"></script>
         <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
