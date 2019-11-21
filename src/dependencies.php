@@ -40,4 +40,5 @@ return function (App $app) {
     $container['UpdateSavingsTotalController'] = new UpdateSavingsTotalControllerFactory();
     $container['UpdateSavingsTargetController'] = new UpdateSavingsTargetControllerFactory();
     $container['GetLast7DaysController'] = new GetLast7DaysControllerFactory();
+    $container['databaseConnection'] = new \PDO('mysql:host=127.0.0.1; dbname=expenses-tracker', 'root', 'password');
 };

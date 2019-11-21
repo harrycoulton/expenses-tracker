@@ -48,7 +48,7 @@ class GetThisMonthExpensesController
     public function arrangeByDate($expenses) {
         $expenseByDate = [];
             foreach ($expenses as $expense) {
-                if ($expense['timestamp'] > strtotime('midnight last day of last month')) {
+                if ($expense['timestamp'] > strtotime('midnight last day of last month') && $expense['timestamp'] < strtotime('midnight first day of next month')) {
                     $expenseByDate[$expense['timestamp']][] = $expense;
                 };
             }
@@ -58,7 +58,7 @@ class GetThisMonthExpensesController
         public function arrangeByCategory($expenses) {
             $expenseByCategory = [];
             foreach ($expenses as $expense) {
-                if ($expense['timestamp'] > strtotime('midnight last day of last month')) {
+                if ($expense['timestamp'] > strtotime('midnight last day of last month') && $expense['timestamp'] < strtotime('midnight first day of next month')) {
                     $expenseByCategory[$expense['category']][] = $expense;
                 };
             }
@@ -69,14 +69,14 @@ class GetThisMonthExpensesController
             $monthCatTotals = [];
             foreach ($expensesByCat as $expenseList) {
                 foreach ($expenseList as $expense) {
-                    if ($expense['timestamp'] > strtotime('midnight last day of last month')) {
+                    if ($expense['timestamp'] > strtotime('midnight last day of last month') && $expense['timestamp'] < strtotime('midnight first day of next month')) {
                         $this->monthTotal = ($this->monthTotal + $expense['expense-value']);
                          };
                 }
             }
             foreach ($expensesByCat as $expenseList) {
                 foreach ($expenseList as $expense) {
-                    if ($expense['timestamp'] > strtotime('midnight last day of last month')){
+                    if ($expense['timestamp'] > strtotime('midnight last day of last month') && $expense['timestamp'] < strtotime('midnight first day of next month')){
                         $monthCatTotals[$expense['category']]['monthTotal'] += $expense['expense-value'];
                         $monthCatTotals[$expense['category']]['monthPercentage'] = number_format((($monthCatTotals[$expense['category']]['monthTotal']/$this->monthTotal)*100), 2);
                     };

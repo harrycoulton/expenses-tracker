@@ -46,7 +46,7 @@ class GetLast7DaysController
     public function arrangeByDate($expenses) {
         $expenseByDate = [];
         foreach ($expenses as $expense) {
-            if ($expense['timestamp'] > strtotime('-1 week')) {
+            if ($expense['timestamp'] > strtotime('-1 week') && $expense['timestamp'] < strtotime('11:59 +1 week')) {
                 $expenseByDate[$expense['timestamp']][] = $expense;
             };
         }
@@ -56,7 +56,7 @@ class GetLast7DaysController
     public function arrangeByCategory($expenses) {
         $expenseByCategory = [];
         foreach ($expenses as $expense) {
-            if ($expense['timestamp'] > strtotime('-1 week')) {
+            if ($expense['timestamp'] > strtotime('-1 week') && $expense['timestamp'] < strtotime('11:59 +1 week')) {
                 $expenseByCategory[$expense['category']][] = $expense;
             };
         }
@@ -67,7 +67,7 @@ class GetLast7DaysController
         $weekCatTotals = [];
         foreach ($expensesByCat as $expenseList) {
             foreach ($expenseList as $expense) {
-                if ($expense['timestamp'] > strtotime('-1 week')) {
+                if ($expense['timestamp'] > strtotime('-1 week') && $expense['timestamp'] < strtotime('11:59 +1 week')) {
                     $this->weekTotal = ($this->weekTotal + $expense['expense-value']);
                 };
             }

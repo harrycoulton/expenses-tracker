@@ -67,7 +67,7 @@
                                     <label for="budget" class="form">New monthly budget in £:</label>
                                     <input type="number" name="budget" id="budget" required>
                                     <input type="hidden" value="<?php echo $userInfo['id'] ?>" name="id">
-                                    <input type="hidden" value="/" name="redirect">
+                                    <input type="hidden" value="/#view" name="redirect">
                                     <input type="submit" value="Update budget">
                                 </form>
                                 <form method="post" action="/update-savings-total" class="nav-form">
@@ -95,14 +95,14 @@
 
         <div class="intro-text">
             <h2><span class="normal">Welcome,</span>  <?php echo $userInfo['username']?></h2>
-            <a href="#view" class="btn-get-started scrollto">Get Started</a>
+            <a href="#view" class="btn-get-started scrollto">View expenses</a>
         </div>
     </section>
 
         <section id="view" class="section-bg">
         <div class="container-fluid">
             <div class="section-header">
-                <h3 class="section-title"><?php echo date('F-Y') ?></h3>
+                <h3 class="section-title"><?php echo $userInfo['username'] ?></h3>
                 <div>
                     <button id="view-expenses-by-individual">Savings View</button>
                     <button id="view-expenses-by-chart" class="on">Budget View</button>
@@ -122,16 +122,12 @@
                                     label: '# of Votes',
                                     data: <?php echo json_encode($savingsTotals)?>,
                                     backgroundColor: [
-                                        'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
                                         'rgba(255, 206, 86, 0.2)',
                                         'rgba(75, 192, 192, 0.2)',
                                         'rgba(153, 102, 255, 0.2)',
                                         'rgba(255, 159, 64, 0.2)'
                                     ],
                                     borderColor: [
-                                        'rgba(255, 99, 132, 1)',
-                                        'rgba(54, 162, 235, 1)',
                                         'rgba(255, 206, 86, 1)',
                                         'rgba(75, 192, 192, 1)',
                                         'rgba(153, 102, 255, 1)',
@@ -154,12 +150,18 @@
                         });
                     </script>
                 </div>
-                <div class="col-lg-4">
+                <?php $yearsRemaining = number_format((($savingsRemaining/($userInfo['budget']/10))/12), 1);?>
+                <div class="col-lg-4 dashboard-desc">
                         <h2>Your current savings target is <span class="highlight">£<?php echo $userInfo['savingstarget'] ?></span></h2>
                         <h2>So far, you've saved <span class="highlight">£<?php echo $userInfo['savingstotal'] ?></span>,
                             with <span class="highlight">£<?php echo $savingsRemaining ?></span> remaining of the target</h2>
                         <h2>If you were to save 10% of your current monthly budget, it would take <span class="highlight"><?php echo number_format((($savingsRemaining/($userInfo['budget']/10))), 0)?></span>
-                            months, or <span class="highlight"><?php echo number_format((($savingsRemaining/($userInfo['budget']/10))/12), 0)?></span> years to reach your target.</h2>
+                            months
+                            <?php if ($yearsRemaining > 1){?>
+                            , or <span class="highlight"><?php echo $yearsRemaining ?></span> years to reach your target.</h2>
+                            <?php } else { ?>
+                            to reach your target.</h2>
+                            <?php } ?>
                 </div>
             </div>
             <div class="row " id="viewchart">
@@ -208,12 +210,12 @@
                             });
                         </script>
                     </div>
-                    <div class="col-lg-4 content wow fadeInRight">
+                    <div class="col-lg-4 content wow fadeInRight dashboard-desc">
                         <h2>Your current budget is <span class="highlight">£<?php echo $userInfo['budget'] ?></span> per month</h2>
                         <h2>So far this month, you've spent <span class="highlight">£<?php echo $monthTotalExpenditure ?></span>,
                             with <span class="highlight">£<?php echo ($userInfo['budget']-$monthTotalExpenditure)?></span> remaining of the current budget</h2>
                         <h2>With <span class="highlight"><?php echo ((date('d', strtotime('last day of this month')))-(date('d', strtotime('today'))))?></span>
-                            days left in the month, your daily budget is <span class="highlight">£<?php echo (($userInfo['budget']-$monthTotalExpenditure)/((date('d', strtotime('last day of this month')))-(date('d', strtotime('today'))))) ?></span></h2>
+                            days left in the month, your daily budget is <span class="highlight">£<?php echo number_format((($userInfo['budget']-$monthTotalExpenditure)/((date('d', strtotime('last day of this month')))-(date('d', strtotime('today'))))), 2) ?></span></h2>
                     </div>
                 </div>
                 <?php } else { ?>
